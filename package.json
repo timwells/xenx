@@ -23,6 +23,7 @@
     "@coreui/vue": "^4.1.0",
     "@coreui/vue-chartjs": "2.0.0",
     "core-js": "^3.19.0",
+    "firebase": "^9.9.4",
     "vue": "^3.2.23",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
