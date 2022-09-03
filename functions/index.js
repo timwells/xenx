@@ -18,47 +18,21 @@ const isApiKeyValid = (request,keyName,apiKeys) => {
 // Automatically allow cross-origin requests
 app.use(cors({ origin: true }));
 
-app.get('/version', (request, response) => {
-    response.send(VERSION);
+app.get('/version', (request, response) => { response.send(VERSION); })
+
+app.post('/event', (request, response) => {
+   let eventTypeExists =  request.body.hasOwnProperty('eventType')
+   response.status(200).json({eventType: eventTypeExists})
 })
 
-app.get('/version2', (request, response) => {
-   response.send(VERSION);
+app.post('/v1/event', (request, response) => {
+   if(isApiKeyValid(request,API_KEY_NAME,config.apiKeys)) {
+
+      let eventTypeExists =  request.body.hasOwnProperty('eventType')
+      response.status(200).json({eventType: eventTypeExists})
+   
+   } else unauthorized(response)
 })
 
 // Expose Express API as a single Cloud Function:
 exports.xenx = functions.https.onRequest(app);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-exports.helloWorld = functions.https.onRequest((request, response) => {
-functions.logger.info("Hello logs!", {structuredData: true});
-   response.send("Hello from Firebase!");
-});
-
