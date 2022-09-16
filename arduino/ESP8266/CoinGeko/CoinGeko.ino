@@ -50,10 +50,6 @@ void getPrice() {
     // httpCode will be negative on error
     if (httpCode > 0) {
       toggleLed();
-      toggleLed();
-      toggleLed();
-      toggleLed();
-      toggleLed();
       // HTTP header has been send and Server response header has been handled
       // Serial.printf("[HTTPS] GET... code: %d\n", httpCode);
       // file found at server?
@@ -79,7 +75,5 @@ void toggleLed() {
   digitalWrite(LED, LOW);   // Turn the LED on (Note that LOW is the voltage level)
   delay(50);                // Wait for a second
   digitalWrite(LED, HIGH);  // Turn the LED off by making the voltage HIGH
-  delay(50);             // Wait for two seconds
-
-
+  delay(50);                // Wait for two seconds
 }
