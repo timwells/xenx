@@ -3,6 +3,8 @@ dist/
 node_modules/
 tests/e2e/reports/
 
+arduino/SmartMeterReader/writeConfig/*.txt
+
 # local env files
 .env.local
 .env.*.local
