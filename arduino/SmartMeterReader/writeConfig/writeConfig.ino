@@ -5,10 +5,11 @@
 #define _XENX_API_DOMAIN       "cloudfunctions.net"
 #define _XENX_API_SUBDIR       "xxxx"
 #define _XENX_API_VERSION_PATH "version"
+
 #define _XENX_API_PULSE_PATH   "v1/event"
 #define _XENX_API_KEY          "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-#define WIFI_SSID             "vodafoneA8E74D"
-#define WIFI_PWD              "MXdmFfNfGbEetCme"
+#define _WIFI_SSID             "vodafoneA8E74D"
+#define _WIFI_PWD              "MXdmFfNfGbEetCme"
 
 #define MAX_WIFI_PROPERTY_DEFAULT 30
 

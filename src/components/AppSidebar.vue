@@ -6,7 +6,7 @@
     @visible-change="
       (event) =>
         $store.commit({
-          type: 'updateSidebarVisible',
+          type: 'app/updateSidebarVisible',
           value: event,
         })
     "
@@ -26,7 +26,7 @@
     <AppSidebarNav />
     <CSidebarToggler
       class="d-none d-lg-flex"
-      @click="$store.commit('toggleUnfoldable')"
+      @click="$store.commit('app/toggleUnfoldable')"
     />
   </CSidebar>
 </template>
@@ -47,8 +47,12 @@ export default {
     return {
       logoNegative,
       sygnet,
-      sidebarUnfoldable: computed(() => store.state.sidebarUnfoldable),
-      sidebarVisible: computed(() => store.state.sidebarVisible),
+      sidebarUnfoldable: computed(() => {
+        console.log(store)
+        console.log(store.app)
+        return store.app.state.sidebarUnfoldable
+      }),
+      sidebarVisible: computed(() => store.app.state.sidebarVisible),
     }
   },
 }

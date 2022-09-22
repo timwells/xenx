@@ -12,7 +12,7 @@
 #define DELAY1 1000
 #define DELAY2 2000
 #define DELAY5 5000
-#define LIGHT_ON 350
+#define LIGHT_ON 200
 #define VERSION "1.0"
 
 #define MAX_WIFI_PROPERTY_DEFAULT 30
@@ -132,20 +132,11 @@ void postEvent(String api) {
 }
 
 void loop() {
-  // getVersion(gAPI);    
-  postEvent(gAPI);
-  delay(DELAY5);
-  
-  /* Read the Analog Input value */
-  // adcValue = analogRead(ANALOG_PORT);
-  // Serial.println(adcValue);
-  /*
-  if(adcValue > LIGHT_ON) {
-    Serial.print("ADC Value = ");
-    Serial.println(adcValue);
-    postPulse(XENX_API_PULSE);
+  delay(DELAY__5);
+  adcValue = analogRead(ANALOG_PORT);
+  if(adcValue < LIGHT_ON) {
+    postEvent(gAPI);
   } 
-  */ 
 }
 
 void pulseLed() {
