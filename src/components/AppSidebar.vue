@@ -37,6 +37,8 @@ import { useStore } from 'vuex'
 import { AppSidebarNav } from './AppSidebarNav'
 import { logoNegative } from '@/assets/brand/logo-negative'
 import { sygnet } from '@/assets/brand/sygnet'
+
+
 export default {
   name: 'AppSidebar',
   components: {
@@ -47,12 +49,8 @@ export default {
     return {
       logoNegative,
       sygnet,
-      sidebarUnfoldable: computed(() => {
-        console.log(store)
-        console.log(store.app)
-        return store.app.state.sidebarUnfoldable
-      }),
-      sidebarVisible: computed(() => store.app.state.sidebarVisible),
+      sidebarUnfoldable: computed(() => store.getters['app/getSidebarUnfoldable']),
+      sidebarVisible: computed(() => store.getters['app/getSidebarVisible']),
     }
   },
 }

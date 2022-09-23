@@ -5,6 +5,26 @@
 #include <WiFiClientSecureBearSSL.h>
 // https://www.youtube.com/watch?v=cTfjqNFAkZ8
 
+
+/*
+1000 pulses = 1kWh; then 1 pulse = 1Wh = 3600 Ws
+Measure the time between two pulses, "t" in seconds.
+Then the approximate power at a given time is:
+P = 3600 Ws / t
+
+Example: t=10 s
+P = 3600 Ws / 10 s = 360 W.
+
+So the estimated power consumption Qh for one hour becomes:
+Qh = P x 1h = 360 W x 1h = 360 Wh = 0.36 kWh
+
+And the estimated power consumption Qd for one day becomes:
+Qd = P x 24h = 360 W x 24h = 8640 Wh = 8.64 kWh
+
+edit: A comment - hard to find a formula ? As soon as you get your SI units right, watt, seconds, meters, degrees, then you dont need to look up any formula. You just have to get the SI units to arrive at the "right places".
+
+*/
+
 #define LED 2 // Define blinking LED pin
 #define DELAY  15000
 #define DELAY__5 50

@@ -1,27 +1,25 @@
-const app = {
-  state: () => ({
+
+export default {
+  namespaced: true,
+  state: {
     version: '1.0.0',
     sidebarVisible: false,
     sidebarUnfoldable: false,
-  }),
+  },
+  getters: {
+    getSidebarVisible: (state) => state.sidebarVisible,
+    getSidebarUnfoldable: (state) => state.sidebarUnfoldable,
+  },
   mutations: {
     toggleSidebar(state) {
-      console.log('toggleSidebar', state)
       state.sidebarVisible = !state.sidebarVisible
     },
     toggleUnfoldable(state) {
-      console.log('toggleUnfoldable', state)
       state.sidebarUnfoldable = !state.sidebarUnfoldable
     },
     updateSidebarVisible(state, payload) {
-      console.log('updateSidebarVisible', state)
       state.sidebarVisible = payload.value
     },
   },
   actions: {},
-}
-
-export default {
-  namespaced: true,
-  app,
 }
