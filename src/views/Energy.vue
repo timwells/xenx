@@ -3,7 +3,7 @@
     <CRow>
       <CCol :md="6" class="mb-4">
         <CCard v-if="labels.length>0">
-          <CCardHeader>Daily Electricity Units</CCardHeader>
+          <CCardHeader>Daily Electricity Watt Units</CCardHeader>
           <CCardBody>
             <CChartBarElectricity @onBarClick="onBarClickEvent" label="Daily Units" :labels="labels" :data="totals" />
           </CCardBody>
@@ -11,9 +11,9 @@
       </CCol>
       <CCol :md="6" class="mb-4">
         <CCard v-if="loadedDaily">
-          <CCardHeader v-if="loadedDaily">Hourly Electricity Units</CCardHeader>
+          <CCardHeader v-if="loadedDaily">Hourly Electricity Watt Units</CCardHeader>
           <CCardBody>
-            <CChartBarElectricity :label="selectedDay" :labels="dailyLabels" :data="dailyData" />
+            <CChartBarElectricity :label="selectedDayLabel()" :labels="dailyLabels" :data="dailyData" />
           </CCardBody>
         </CCard>
       </CCol>
@@ -53,7 +53,7 @@ export default {
       this.$store.dispatch("energyEvents/getDailyEvents", {dateIndex: event})
       this.selectedDay = event
     },
-    selectedDayLabel() { return `${this.selectedDay} - Hourly Electricity Units` }
+    selectedDayLabel() { return `${this.selectedDay} - Hourly Electricity Watt Units` }
   },
   mounted() {
     this.$store.dispatch("energyEvents/getEvents")
