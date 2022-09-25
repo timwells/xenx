@@ -1,12 +1,20 @@
 export default [
   {
     component: 'CNavItem',
+    name: 'Energy',
+    to: '/energy',
+    icon: 'cil-speedometer',
+    badge: {
+      color: 'primary',
+    },
+  },
+  {
+    component: 'CNavItem',
     name: 'Dashboard',
     to: '/dashboard',
     icon: 'cil-speedometer',
     badge: {
       color: 'primary',
-      text: 'NEW',
     },
   },
   {

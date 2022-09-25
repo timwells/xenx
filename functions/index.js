@@ -7,7 +7,7 @@ const cors = require('cors');
 const app = express();
 const { config } = require("./config");
 
-const VERSION = "0.0.1";
+const VERSION = "0.0.9";
 const API_KEY_NAME = "x-api-key"
 admin.initializeApp(functions.config().firebase);
 
@@ -18,9 +18,24 @@ const epochId = () => {
    let cD = ("0" + d.getUTCDate()).slice(-2);
    let cM = ("0" + (d.getUTCMonth() + 1)).slice(-2);
    let cY = d.getFullYear();
-   let cH = d.getUTCHours();
+   let cH = ("0" + d.getUTCHours()).slice(-2);
+
    return `${cY}${cM}${cD}/${cH}`       
 }
+
+const epochId2 = () => {
+   let d = new Date();
+   let cD = ("0" + d.getUTCDate()).slice(-2);
+   let cM = ("0" + (d.getUTCMonth() + 1)).slice(-2);
+   let cY = d.getFullYear();
+   let cH = ("0" + d.getUTCHours()).slice(-2);
+
+   return {
+      date: `${cY}${cM}${cD}`,
+      hr: `${cH}`
+   }       
+}
+
 const isApiKeyValid = (request,keyName,apiKeys) => {
    const apiKey = request.header(keyName);
    return (apiKey != undefined && 
@@ -30,25 +45,26 @@ const isApiKeyValid = (request,keyName,apiKeys) => {
 
 // Automatically allow cross-origin requests
 app.use(cors({ origin: true }));
-
 app.get('/version', (request, response) => { response.send(VERSION); })
+
+/*
+ events2\20220924\total = 203
+ events2\20220924\01\count = 13 
+*/
 
 app.post('/v1/event', (request, response) => {
    if(isApiKeyValid(request,API_KEY_NAME,config.apiKeys)) {
-      const epochKey = `events/${epochId()}`
-      const db = getDatabase();
-      db.ref(`${epochKey}/counts`).once("value", 
-         async (snapshot) => {
-            let newCounts = 1;
-            if (snapshot.exists()) newCounts = snapshot.val() + 1;            
-            await db.ref(`${epochKey}`).set({ counts: newCounts })
-            return response.status(200).json({ counts: newCounts })
-         })
+      const epoch = epochId2();
+      const db = getDatabase();      
+      const updates = {};
+      updates[`events/${epoch.date}/${epoch.hr}/counts`] = admin.database.ServerValue.increment(1);
+      updates[`events/${epoch.date}/total`] = admin.database.ServerValue.increment(1);
+      db.ref().update(updates);
+
+      return response.status(200).json('ok');
+
    } else return unauthorized(response)
 })
 
 // Expose Express API as a single Cloud Function:
 exports.xenx = functions.https.onRequest(app);
-
-
-// let eventTypeExists =  request.body.hasOwnProperty('eventType')

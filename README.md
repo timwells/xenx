@@ -18,3 +18,13 @@
    - index.html exist OverWr ? N
 * firebase deploy --only functions
 * firebase deploy --only hosting
+
+
+
+## rt database
+{
+  "rules": {
+    ".read": "now < 1664751600000",  // 2022-10-3
+    ".write": "now < 1664751600000",  // 2022-10-3
+  }
+}
