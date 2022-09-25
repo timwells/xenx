@@ -28,7 +28,7 @@ const epochId2 = () => {
    let cD = ("0" + d.getUTCDate()).slice(-2);
    let cM = ("0" + (d.getUTCMonth() + 1)).slice(-2);
    let cY = d.getFullYear();
-   let cH = ("0" + d.getUTCHours()).slice(-2);
+   let cH = d.getUTCHours();
 
    return {
       date: `${cY}${cM}${cD}`,
