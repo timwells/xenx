@@ -1,11 +1,23 @@
 <template>
   <div>
-    <CCard>
-      <CCardHeader>Electricity</CCardHeader>
-        <CCardBody v-if="labels.length>0">
-          <CChartBarElectricity :labels="labels" :data="totals" />
-        </CCardBody>
-    </CCard>
+    <CRow>
+      <CCol :md="6" class="mb-4">
+        <CCard v-if="labels.length>0">
+          <CCardHeader>Daily Electricity Units</CCardHeader>
+          <CCardBody>
+            <CChartBarElectricity @onBarClick="onBarClickEvent" label="Daily Units" :labels="labels" :data="totals" />
+          </CCardBody>
+        </CCard>
+      </CCol>
+      <CCol :md="6" class="mb-4">
+        <CCard v-if="loadedDaily">
+          <CCardHeader v-if="loadedDaily">Hourly Electricity Units</CCardHeader>
+          <CCardBody>
+            <CChartBarElectricity :label="selectedDay" :labels="dailyLabels" :data="dailyData" />
+          </CCardBody>
+        </CCard>
+      </CCol>
+    </CRow>
   </div>
 </template>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
@@ -19,11 +31,29 @@ export default {
     CChartBarElectricity
   },
 	computed: {
-    ...mapState("energyEvents", ["events","labels","totals"])
+    ...mapState("energyEvents", ["events","labels","totals","dailyLabels","dailyData"]),
 	},
+  watch: {
+    dailyData(n,o) {
+      this.loadedDaily = true     
+    }
+  },
+  data: () => ({
+    loadedDaily: false,
+    selectedDay: ""
+  }),  
   setup() {
     return {
+
     }
+  },
+  methods: {
+    onBarClickEvent(event) {
+      this.loadedDaily = false
+      this.$store.dispatch("energyEvents/getDailyEvents", {dateIndex: event})
+      this.selectedDay = event
+    },
+    selectedDayLabel() { return `${this.selectedDay} - Hourly Electricity Units` }
   },
   mounted() {
     this.$store.dispatch("energyEvents/getEvents")

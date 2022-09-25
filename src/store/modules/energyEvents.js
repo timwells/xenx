@@ -10,6 +10,8 @@ export default {
     state: {
         labels: [],
         totals: [],
+        dailyLabels: [],
+        dailyData: [],
     },
     getters: {
       getLabels: (state) => state.labels,
@@ -17,14 +19,16 @@ export default {
     },
     mutations: {
         SET_LABELS: (state, payload) => { state.labels = payload },
-        SET_TOTALS: (state, payload) => { state.totals = payload }
+        SET_TOTALS: (state, payload) => { state.totals = payload },
+        SET_DAILY_LABELS: (state, payload) => { state.dailyLabels = payload },
+        SET_DAILY_DATA: (state, payload) => { state.dailyData = payload },
     },
     actions: {
         getEvents({ commit }) {
             const dbRef = ref(getDatabase());
             get(child(dbRef, `events/`)).then((snapshot) => {
                 let labels = [];
-                let totals = []
+                let totals = [];
                 if (snapshot.exists()) {
                     for (const [key, value] of Object.entries(snapshot.val())) {
                         labels.push(key)
@@ -35,5 +39,27 @@ export default {
                 commit("SET_TOTALS", totals) 
             }).catch((error) => { console.error(error); });
         },
+        getDailyEvents({ commit }, { dateIndex }) {
+            get(child(ref(getDatabase()), `events/${dateIndex}`))
+                .then((snapshot) => {
+                    if (snapshot.exists()) {
+                        console.log(`events/${dateIndex}`, snapshot.val())
+                        let dailyLabels = [];
+                        let dailyData = [];
+
+                        commit("SET_DAILY_LABELS", [])
+                        commit("SET_DAILY_DATA", [])
+
+                        for (const [key, value] of Object.entries(snapshot.val())) {
+                            if(value.hasOwnProperty("counts")) {
+                                dailyData.push(value.counts)
+                                dailyLabels.push(`${key}`)
+                            }
+                        }
+                        commit("SET_DAILY_LABELS", dailyLabels)
+                        commit("SET_DAILY_DATA", dailyData)
+                    }
+                })
+        }
     }
 }
