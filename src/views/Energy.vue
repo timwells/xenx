@@ -43,9 +43,7 @@ export default {
     selectedDay: ""
   }),  
   setup() {
-    return {
-
-    }
+    return {}
   },
   methods: {
     onBarClickEvent(event) {
