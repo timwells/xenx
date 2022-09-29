@@ -3,7 +3,7 @@
     <CRow>
       <CCol :md="6" class="mb-4">
         <CCard v-if="labels.length>0">
-          <CCardHeader>Daily Electricity Watt Units</CCardHeader>
+          <CCardHeader>Daily Electricity Watt Units - Ave: {{averageFixed}}</CCardHeader>
           <CCardBody>
             <CChartBarElectricity @onBarClick="onBarClickEvent" label="Daily Units" :labels="labels" :data="totals" />
           </CCardBody>
@@ -11,7 +11,7 @@
       </CCol>
       <CCol :md="6" class="mb-4">
         <CCard v-if="loadedDaily">
-          <CCardHeader v-if="loadedDaily">Hourly Electricity Watt Units</CCardHeader>
+          <CCardHeader v-if="loadedDaily">Hourly Electricity Watt Units - Ave: {{dailyAverageFixed}}</CCardHeader>
           <CCardBody>
             <CChartBarElectricity :label="selectedDayLabel()" :labels="dailyLabels" :data="dailyData" />
           </CCardBody>
@@ -31,7 +31,10 @@ export default {
     CChartBarElectricity
   },
 	computed: {
-    ...mapState("energyEvents", ["events","labels","totals","dailyLabels","dailyData"]),
+    ...mapState("energyEvents", 
+      ["events","labels","totals","average","dailyLabels","dailyData","dailyAverage"]),
+      averageFixed() { return this.average.toFixed(1) },
+      dailyAverageFixed() { return this.dailyAverage.toFixed(1) }
 	},
   watch: {
     dailyData(n,o) {
