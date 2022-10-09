@@ -37,6 +37,7 @@ export default {
                 commit("SET_AVERAGE",average)
                 commit("SET_LABELS", labels) 
                 commit("SET_TOTALS", totals) 
+
                 if (snapshot.exists()) {
                     for (const [key, value] of Object.entries(snapshot.val())) {
                         labels.push(key)
