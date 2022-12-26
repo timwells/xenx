@@ -1,6 +1,7 @@
 <template>
   <CChart
     type="bar"
+    height="100"
     :data="chartData"
     @get-element-at-event="chartElementEvent"
   />

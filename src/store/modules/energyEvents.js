@@ -34,6 +34,7 @@ export default {
                 let labels = [];
                 let totals = [];
                 let average = 0.0;
+                
                 commit("SET_AVERAGE",average)
                 commit("SET_LABELS", labels) 
                 commit("SET_TOTALS", totals) 

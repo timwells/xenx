@@ -1,7 +1,7 @@
 <template>
   <div>
     <CRow>
-      <CCol :md="6" class="mb-2">
+      <CCol :md="12" class="mb-2">
         <CCard>
           <CCardHeader>Daily Electricity Watt Units - Ave: {{ averageFixed }}
             <!--CButton color="primary" class="float-end" @click="onRefresh"-->
@@ -15,7 +15,7 @@
           </CCardBody>
         </CCard>
       </CCol>
-      <CCol :md="6" class="mb-2">
+      <CCol :md="12" class="mb-2">
         <CCard v-if="loadedDaily">
           <CCardHeader v-if="loadedDaily">Hourly Electricity Watt Units - Ave: {{ dailyAverageFixed }}</CCardHeader>
           <CCardBody>
